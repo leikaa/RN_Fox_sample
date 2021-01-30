@@ -1,33 +1,50 @@
 import React from 'react';
 import {
   View,
-  Text,
   StyleSheet,
+  SafeAreaView,
+  Dimensions,
 } from 'react-native';
 import {useNavigation} from 'react-navigation-hooks';
 
-import {THEME} from '../theme';
 import ArrowBackIcon from '../components/Common/Icons/ArrowBackIcon';
+import ProfileItem from '../components/ProfileScreen/ProfileItem';
+import SubmitButton from '../components/Common/CommonButton';
+
+const window = Dimensions.get('window');
 
 const ProfileScreen = () => {
   const {navigate} = useNavigation();
+  const email = 'test mail';
+
+  const onSubmitHandler = () => {
+    // #todo clear all data
+    navigate('Login');
+  };
 
   return (
-    <View style={styles.container}>
-      <Text>Profile screen</Text>
-
-      <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-        <View style={{backgroundColor: THEME.MAIN_COLOR}}>
-          <Text onPress={() => navigate('Login')}>Logout</Text>
-        </View>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.content_container}>
+        <ProfileItem
+          itemTitle={'Email'}
+          itemValue={email}
+        />
       </View>
-    </View>
+
+      <View style={styles.logout_btn_container}>
+        <SubmitButton
+          title={'Выход'}
+          onPress={onSubmitHandler}
+          style={styles.logout_btn}
+        />
+      </View>
+    </SafeAreaView>
   );
 };
 
 ProfileScreen.navigationOptions = () => ({
   headerBackTitle: null,
-  title: 'Profile',
+  title: 'Профиль',
   headerBackImage: () => (
     <ArrowBackIcon
       color={'#fff'}
@@ -41,6 +58,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  content_container: {
+    height: 70,
+    flex: 1,
+  },
+  logout_btn_container: {
+    flexDirection: 'row',
+    position: 'absolute',
+    bottom: 30,
+    alignSelf: 'center',
+  },
+  logout_btn: {
+    width: window.width - 40,
   },
 });
 
