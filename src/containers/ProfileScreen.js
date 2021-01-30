@@ -5,21 +5,23 @@ import {
   SafeAreaView,
   Dimensions,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {useNavigation} from 'react-navigation-hooks';
 
 import ArrowBackIcon from '../components/Common/Icons/ArrowBackIcon';
 import ProfileItem from '../components/ProfileScreen/ProfileItem';
 import SubmitButton from '../components/Common/CommonButton';
+import {clearAllData} from '../store/actions/profile';
 
 const window = Dimensions.get('window');
 
 const ProfileScreen = () => {
   const {navigate} = useNavigation();
+  const dispatch = useDispatch();
   const email = useSelector(state => state.Profile.email);
 
   const onSubmitHandler = () => {
-    // #todo clear all data
+    dispatch(clearAllData());
     navigate('Login');
   };
 
