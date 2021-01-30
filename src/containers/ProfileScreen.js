@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   Dimensions,
 } from 'react-native';
+import {useSelector} from 'react-redux';
 import {useNavigation} from 'react-navigation-hooks';
 
 import ArrowBackIcon from '../components/Common/Icons/ArrowBackIcon';
@@ -15,7 +16,7 @@ const window = Dimensions.get('window');
 
 const ProfileScreen = () => {
   const {navigate} = useNavigation();
-  const email = 'test mail';
+  const email = useSelector(state => state.Profile.email);
 
   const onSubmitHandler = () => {
     // #todo clear all data
