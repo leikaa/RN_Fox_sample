@@ -5,19 +5,8 @@ import MainScreen from '../containers/MainScreen';
 import ProfileScreen from '../containers/ProfileScreen';
 
 const MainLayer = createStackNavigator({
-    Main: {
-      screen: MainScreen,
-      navigationOptions: ({
-        headerShown: false,
-        headerBackTitle: null,
-      }),
-    },
-    Profile: {
-      screen: ProfileScreen,
-      navigationOptions: ({
-        headerBackTitle: null,
-      }),
-    },
+    Main: MainScreen,
+    Profile: ProfileScreen,
   },
   {
     initialRouteName: 'Main',

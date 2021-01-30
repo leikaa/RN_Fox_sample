@@ -18,7 +18,7 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: 'module',
     parserOptions: {
-      parser: 'babel-eslint'
+      parser: 'babel-eslint',
     },
   },
   plugins: [
@@ -27,7 +27,7 @@ module.exports = {
   ],
   settings: {
     'react-native/style-sheet-object-names': ['EStyleSheet', 'OtherStyleSheet', 'PStyleSheet'],
-    'import/ignore': ['react-native']
+    'import/ignore': ['react-native'],
   },
   rules: {
     'import/prefer-default-export': 'off',
@@ -35,6 +35,7 @@ module.exports = {
     'arrow-body-style': ['error', 'as-needed'],
     'react/prop-types': 'off',
     'react/jsx-no-bind': 'off',
-    'object-shorthand': 'off'
+    'object-shorthand': 'off',
+    'react/display-name': 'off',
   },
 };

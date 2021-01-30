@@ -7,6 +7,7 @@ import {
 import {useNavigation} from 'react-navigation-hooks';
 
 import {THEME} from '../theme';
+import ArrowBackIcon from '../components/Common/Icons/ArrowBackIcon';
 
 const ProfileScreen = () => {
   const {navigate} = useNavigation();
@@ -21,9 +22,20 @@ const ProfileScreen = () => {
         </View>
       </View>
     </View>
-
   );
 };
+
+ProfileScreen.navigationOptions = () => ({
+  headerBackTitle: null,
+  title: 'Profile',
+  headerBackImage: () => (
+    <ArrowBackIcon
+      color={'#fff'}
+      width={14}
+      height={24}
+    />
+  ),
+});
 
 const styles = StyleSheet.create({
   container: {

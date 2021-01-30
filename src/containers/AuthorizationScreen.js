@@ -24,6 +24,11 @@ const AuthorizationScreen = () => {
   );
 };
 
+AuthorizationScreen.navigationOptions = () => ({
+  headerShown: false,
+  headerBackTitle: null,
+});
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

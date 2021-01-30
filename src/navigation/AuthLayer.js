@@ -4,13 +4,7 @@ import {THEME} from '../theme';
 import AuthorizationScreen from '../containers/AuthorizationScreen';
 
 const AuthLayer = createStackNavigator({
-    Login: {
-      screen: AuthorizationScreen,
-      navigationOptions: ({
-        headerShown: false,
-        headerBackTitle: null,
-      }),
-    },
+    Login: AuthorizationScreen,
   },
   {
     initialRouteName: 'Login',
