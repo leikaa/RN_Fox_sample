@@ -10,7 +10,7 @@ import ErrorsHandler from '../../helpers/ErrorsHandler';
 const getWeatherForecastByCoords = async (lat, long) => {
   try {
     const FORECAST_API_TOKEN = 'e36dbb64b85904ada69b3f59b09fdbc8';
-    return fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${FORECAST_API_TOKEN}`)
+    return fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${FORECAST_API_TOKEN}&units=metric&lang=ru`)
       .then(response => response.json())
       .catch(e => {
         console.log('getWeatherForecastByCoords: ', e);
@@ -32,7 +32,6 @@ const getUserLocationWeatherForecast = (setIsLoading, dispatch) => {
 
       const forecastData = await getWeatherForecastByCoords(coords.lat, coords.long);
       if (forecastData) {
-        // console.log('forecastData', forecastData);
         dispatch({type: SET_WEATHER_DATA, forecastData});
       }
       setIsLoading(false);
