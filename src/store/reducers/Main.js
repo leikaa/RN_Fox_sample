@@ -16,6 +16,12 @@ export function Main(state = initialState, payload) {
         forecastData: payload.forecastData,
         forecastDateTime: moment(new Date()).format('h:mm a, MMM DD'),
       };
+    case 'CLEAR_ALL_DATA':
+      return {
+        ...state,
+        forecastData: {},
+        forecastDateTime: '',
+      };
 
     default:
       return state;

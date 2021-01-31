@@ -14,7 +14,9 @@ import {MaterialIndicator} from 'react-native-indicators';
 
 import {THEME} from '../theme';
 import UserAccountIcon from '../components/Common/Icons/UserProfileIcon';
-import {setCurrentLocationCoords} from '../store/actions/main';
+import SubmitButton from '../components/Common/CommonButton';
+import CommonTextInput from '../components/Common/CommonTextInput';
+import {getCoordsWeatherForecast, getCityWeatherForecast} from '../store/actions/main';
 
 const window = Dimensions.get('window');
 
@@ -22,6 +24,8 @@ const MainScreen = ({navigation}) => {
   const {navigate} = useNavigation();
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
+  const [isSearchLoading, setIsSearchLoading] = useState(false);
+  const [cityToSearch, setCityToSearch] = useState('');
   const forecastData = useSelector(state => state.Main.forecastData);
   const forecastDateTime = useSelector(state => state.Main.forecastDateTime);
 
@@ -38,24 +42,44 @@ const MainScreen = ({navigation}) => {
     />
   ));
 
+  const onSubmitHandler = () => {
+    if (!cityToSearch) {
+      return false;
+    }
+
+    setIsSearchLoading(true);
+    dispatch(getCityWeatherForecast(cityToSearch, setIsSearchLoading));
+  };
+
   useEffect(() => {
     navigation.setParams({
       headerUserIconPress: headerUserIconPress,
     });
 
-    dispatch(setCurrentLocationCoords(setIsLoading));
+    dispatch(getCoordsWeatherForecast(setIsLoading));
   }, []);
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content_container}>
+        <View style={styles.search_city_container}>
+          <CommonTextInput
+            style={styles.search_city_input}
+            title={'Укажите город'}
+            onChangeValue={setCityToSearch}
+            value={cityToSearch}
+            filter={'name'}
+          />
+          <SubmitButton
+            title={'Найти'}
+            onPress={onSubmitHandler}
+            isLoading={isSearchLoading}
+            style={styles.search_city_button}
+          />
+        </View>
         {
           isLoading &&
           <MaterialIndicator color={THEME.MAIN_COLOR}/>
-        }
-        {
-          !isLoading && Object.keys(forecastData).length === 0 &&
-          <Text>No data</Text>
         }
         {
           !isLoading && Object.keys(forecastData).length !== 0 &&
@@ -107,6 +131,25 @@ const styles = StyleSheet.create({
   },
   content_container: {
     flex: 1,
+  },
+
+  search_city_container: {
+    flexWrap: 'nowrap',
+    flexDirection: 'row',
+    width: window.width - 40,
+    justifyContent: 'space-between',
+    alignSelf: 'center',
+    marginTop: 26,
+  },
+  search_city_input: {
+    width: window.width * 0.6,
+    marginHorizontal: 0,
+    marginTop: 0,
+  },
+  search_city_button: {
+    width: window.width * 0.25,
+    borderRadius: 0,
+    height: 56,
   },
 
   weather_container: {
