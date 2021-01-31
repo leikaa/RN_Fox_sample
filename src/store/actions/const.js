@@ -1,2 +1,3 @@
 export const SET_USER_DATA = 'SET_USER_DATA';
 export const CLEAR_ALL_DATA = 'CLEAR_ALL_DATA';
+export const SET_WEATHER_DATA = 'SET_WEATHER_DATA';

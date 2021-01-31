@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -6,12 +6,19 @@ import {
   SafeAreaView,
   TouchableOpacity,
 } from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from 'react-navigation-hooks';
+import {MaterialIndicator} from 'react-native-indicators';
 
+import {THEME} from '../theme';
 import UserAccountIcon from '../components/Common/Icons/UserProfileIcon';
+import {setCurrentLocationCoords} from '../store/actions/main';
 
 const MainScreen = ({navigation}) => {
   const {navigate} = useNavigation();
+  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(true);
+  const forecastData = useSelector(state => state.Main.forecastData);
 
   const headerUserIconPress = () => navigate('Profile');
 
@@ -19,12 +26,25 @@ const MainScreen = ({navigation}) => {
     navigation.setParams({
       headerUserIconPress: headerUserIconPress,
     });
+
+    dispatch(setCurrentLocationCoords(setIsLoading));
   }, []);
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content_container}>
-        <Text>Main screen</Text>
+        {
+          isLoading &&
+          <MaterialIndicator color={THEME.MAIN_COLOR}/>
+        }
+        {
+          !isLoading && Object.keys(forecastData).length === 0 &&
+          <Text>No data</Text>
+        }
+        {
+          !isLoading && Object.keys(forecastData).length !== 0 &&
+          <Text>Main screen</Text>
+        }
       </View>
     </SafeAreaView>
   );
@@ -32,7 +52,7 @@ const MainScreen = ({navigation}) => {
 
 MainScreen.navigationOptions = ({navigation}) => ({
   headerBackTitle: null,
-  title: 'Weather forecast',
+  title: 'Прогноз погоды',
   headerLeft: () => (
     <TouchableOpacity
       style={{
