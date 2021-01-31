@@ -47,7 +47,7 @@ const AuthorizationScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View>
+      <View style={styles.auth_wrapper}>
         <InputField
           placeholder={'Email'}
           value={login}
@@ -91,6 +91,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     position: 'relative',
   },
+
+  auth_wrapper: {
+    marginBottom: 30
+  },
+
   sign_in_btn_container: {
     flexDirection: 'row',
     position: 'absolute',

@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Dimensions,
   Image,
+  ScrollView,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from 'react-navigation-hooks';
@@ -49,6 +50,7 @@ const MainScreen = ({navigation}) => {
 
     setIsSearchLoading(true);
     dispatch(getCityWeatherForecast(cityToSearch, setIsSearchLoading));
+    setCityToSearch('');
   };
 
   useEffect(() => {
@@ -83,7 +85,7 @@ const MainScreen = ({navigation}) => {
         }
         {
           !isLoading && Object.keys(forecastData).length !== 0 &&
-          <View style={styles.weather_container}>
+          <ScrollView style={styles.weather_container}>
             <Text style={styles.weather_date_time}>{forecastDateTime}</Text>
             <Text style={styles.weather_location_name}>{forecastData.name}, {forecastData.sys.country}</Text>
             <View style={styles.weather_temp_section}>
@@ -94,7 +96,7 @@ const MainScreen = ({navigation}) => {
             </View>
             <Text>Ощущается
               как {Math.round(forecastData.main.feels_like)} {'\u00b0'}C, {getWeatherDescription(forecastData.weather)}.</Text>
-          </View>
+          </ScrollView>
         }
       </View>
     </SafeAreaView>
@@ -156,7 +158,8 @@ const styles = StyleSheet.create({
     flex: 1,
     width: window.width - 40,
     alignSelf: 'center',
-    marginVertical: 20,
+    marginTop: 20,
+    marginBottom: 10,
   },
   weather_date_time: {
     fontSize: 18,

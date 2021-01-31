@@ -24,13 +24,15 @@ const getWeatherForecastByCityName = async (cityName) => {
   }
 };
 
-export const getCityWeatherForecast = (cityToSearch, setIsSearchLoading) => (
+export const getCityWeatherForecast = (cityToSearch, setIsLoading) => (
   async dispatch => {
     const forecastData = await getWeatherForecastByCityName(cityToSearch);
-    if (forecastData) {
+    if (forecastData && +(forecastData.cod) === 200) {
       dispatch({type: SET_WEATHER_DATA, forecastData});
+    } else if (forecastData) {
+      ErrorsHandler('Город не найден');
     }
-    setIsSearchLoading(false);
+    setIsLoading(false);
   }
 );
 
@@ -58,8 +60,10 @@ const getUserLocationWeatherForecast = (setIsLoading) => (
         };
 
         const forecastData = await getWeatherForecastByCoords(coords.lat, coords.long);
-        if (forecastData) {
+        if (forecastData && +(forecastData.cod) === 200) {
           dispatch({type: SET_WEATHER_DATA, forecastData});
+        } else if (forecastData) {
+          ErrorsHandler('Город не найден');
         }
         setIsLoading(false);
       },

@@ -25,7 +25,7 @@ const CommonTextInput = ({style, title, onChangeValue, value, keyboardType = 'de
         ref={focusOnElement}
         onChangeText={text => {
           if (filter === 'name') {
-            const re = /^[\p{L}\s]+$/u;
+            const re = /^[\p{L}\s]*$/u;
             if (re.test(String(text).toLowerCase())) {
               onChangeValue(text);
             }
