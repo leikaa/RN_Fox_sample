@@ -26,6 +26,7 @@
     "react-native-svg": "^12.1.0",
     "react-native-indicators": "^0.17.0",
     "@react-native-community/geolocation": "^2.0.2",
+    "react-native-permissions": "^3.0.0",
     "moment": "^2.29.1"
   },
   "devDependencies": {

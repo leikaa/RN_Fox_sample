@@ -3,9 +3,11 @@ import {
   Platform,
 } from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
+import {PERMISSIONS} from 'react-native-permissions';
 
 import {SET_WEATHER_DATA} from './const';
 import ErrorsHandler from '../../helpers/ErrorsHandler';
+import HandleIosPermission from '../../helpers/HandleIosPermission';
 
 const FORECAST_API_TOKEN = 'e36dbb64b85904ada69b3f59b09fdbc8';
 const FORECAST_API_BASE_URL = `https://api.openweathermap.org/data/2.5/weather?appid=${FORECAST_API_TOKEN}&units=metric&lang=ru`;
@@ -94,7 +96,14 @@ export const getCoordsWeatherForecast = setIsLoading => (
         ErrorsHandler('Произошла непредвиденная ошибка при получении разрешения на определение локации устройства');
       }
     } else {
-      dispatch(getUserLocationWeatherForecast(setIsLoading));
+      const locationWhenInUsePermission = await HandleIosPermission(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
+      const locationAlwaysPermission = await HandleIosPermission(PERMISSIONS.IOS.LOCATION_ALWAYS);
+      if (locationWhenInUsePermission || locationAlwaysPermission) {
+        dispatch(getUserLocationWeatherForecast(setIsLoading));
+      } else {
+        setIsLoading(false);
+        ErrorsHandler('Чтобы получить прогноз погоды в текущем месте, необходим доступ к определению локации устройства', 'Уведомление');
+      }
     }
   }
 );
